@@ -1,16 +1,16 @@
 footer {
   margin-top: 45px;
   padding-top: 5px;
-  border-top: 1px solid #eaeaea;
-  color: #777;
+  border-top: 1px solid $off-white;
+  color: $mid-gray;
 }
 
 footer a {
-  color: #555;
+  color: $low-gray;
 }
 
 footer a:hover {
-  color: #222;
+  color: $black;
 }
 
 footer small {
