@@ -63,4 +63,18 @@ class UserTest < ActiveSupport::TestCase
     @user.save
     assert_not user_copy.valid?
   end
+
+  test 'name should be saved as capitalized' do
+    user_name = 'leo cat'
+    @user.name = user_name
+    @user.save
+    assert_equal user_name.titlecase, @user.reload.name
+  end
+
+  test 'email should be saved as lower-case' do
+    mixed_mail = 'EXAMPLE@user.com'
+    @user.email = mixed_mail
+    @user.save
+    assert_equal mixed_mail.downcase, @user.reload.email
+  end
 end

@@ -2,7 +2,7 @@ class User < ApplicationRecord
   EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]{1,4}\z/i.freeze
 
   before_save do
-    name.capitalize!
+    self.name = name.titlecase
     email.downcase!
   end
 
