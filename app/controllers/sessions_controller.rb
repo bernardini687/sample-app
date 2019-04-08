@@ -8,11 +8,11 @@ class SessionsController < ApplicationController
       # flash[:success] = 'YAAAAAY!'
     else
       if params[:session].values.uniq == [""]
-        flash[:danger] = 'NOOOOO! Type something!'
+        flash.now[:danger] = 'NOOOOO! Type something!'
       elsif user
-        flash[:danger] = 'NOOOOO! Bad password!'
+        flash.now[:danger] = 'NOOOOO! Bad password!'
       else
-        flash[:danger] = 'NOOOOO! Bad email!'
+        flash.now[:danger] = 'NOOOOO! Bad email!'
       end
       render 'new'
     end
