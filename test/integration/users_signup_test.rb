@@ -27,5 +27,6 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     assert_template 'users/show'
     assert_select   '.alert-success'
     assert_select   'title', full_title('rails tutorial')
+    assert is_logged_in?
   end
 end
