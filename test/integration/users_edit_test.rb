@@ -22,7 +22,6 @@ class UsersEditTest < ActionDispatch::IntegrationTest
     assert_not_nil session[:forwarding_url]
     log_in_as(@user)
     assert_redirected_to edit_user_url(@user)
-    assert_nil session[:forwarding_url]
     name = 'Foscar Example'
     email = 'foscar@example.com'
     patch user_path(@user), params: { user: { name: name,
@@ -31,6 +30,7 @@ class UsersEditTest < ActionDispatch::IntegrationTest
                                               password_confirmation: '' } }
     assert_not flash.empty?
     assert_redirected_to @user
+    assert_nil session[:forwarding_url]
     assert_equal name, @user.reload.name
     assert_equal email, @user.reload.email
   end

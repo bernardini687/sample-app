@@ -26,7 +26,7 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     follow_redirect! # get user_path(User.first)
     assert_template 'users/show'
     assert_select   '.alert-success'
-    assert_select   'title', full_title('rails tutorial')
+    assert_select   'title', full_title('Rails Tutorial')
     assert is_logged_in?
   end
 end
