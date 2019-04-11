@@ -57,6 +57,9 @@ class UsersController < ApplicationController
   # Confirms the correct user.
   def correct_user
     @user = User.find(params[:id])
-    redirect_to(root_url) unless current_user?(@user)
+    unless current_user?(@user)
+      flash[:danger] = 'Hey, what were you trying to do?'
+      redirect_to(root_url)
+    end
   end
 end
