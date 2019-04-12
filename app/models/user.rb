@@ -1,10 +1,7 @@
 class User < ApplicationRecord
-  attr_accessor :remember_token
-
-  before_save do
-    self.name = name.titlecase
-    email.downcase!
-  end
+  attr_accessor :remember_token, :activation_token
+  before_save :format_data
+  before_create :create_activation_digest
 
   validates :name, presence: true, length: { maximum: 32 }
   EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]{1,4}\z/i.freeze
@@ -48,5 +45,19 @@ class User < ApplicationRecord
   # Forgets a user.
   def forget
     update_attribute(:remember_digest, nil)
+  end
+
+  private
+
+  # Format name and email
+  def format_data
+    self.name = name.titlecase
+    email.downcase!
+  end
+
+  # Creates and assigns the activation token and digest.
+  def create_activation_digest
+    self.activation_token = User.new_token
+    self.activation_digest = User.digest(activation_token)
   end
 end
