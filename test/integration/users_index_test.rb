@@ -2,16 +2,19 @@ require 'test_helper'
 
 class UsersIndexTest < ActionDispatch::IntegrationTest
   def setup
-    @admin     = users(:oscar)
+    @admin = users(:oscar)
     @non_admin = users(:archer)
   end
 
   test 'index as admin including pagination and delete links' do
     log_in_as(@admin)
+    # Deactivate User to test it does not show up again
+    User.paginate(page: 1).first.toggle!(:activated)
     get users_path
     assert_template 'users/index'
     assert_select 'div.pagination'
-    User.paginate(page: 1, per_page: 10).each do |user|
+    assigns(:users).each do |user|
+      assert user.activated?
       assert_select 'a[href=?]', user_path(user), text: user.name
       unless user == @admin
         assert_select 'a[href=?]', user_path(user), text: '(delete)'
