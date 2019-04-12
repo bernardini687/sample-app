@@ -5,9 +5,15 @@ class SessionsController < ApplicationController
     # Set @user so users_login_test can retrieve it with the assigns method
     @user = User.find_by(email: params[:session][:email].downcase)
     if @user&.authenticate(params[:session][:password])
-      log_in @user
-      params[:session][:remember_me] == '1' ? remember(@user) : forget(@user)
-      redirect_back_or @user
+      if @user.activated?
+        log_in @user
+        params[:session][:remember_me] == '1' ? remember(@user) : forget(@user)
+        redirect_back_or @user
+      else
+        message = 'Account not activated. Check your email, friend!'
+        flash[:warning] = message
+        redirect_to root_url
+      end
     else
       if params[:session].values.uniq == ['']
         flash.now[:danger] = 'NOOOOO! Type something!'
