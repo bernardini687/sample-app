@@ -7,6 +7,7 @@ class MicropostsController < ApplicationController
       flash[:success] = 'Micropost created!'
       redirect_to root_url
     else
+      @feed_items = [] # To prevent undefined method `any?` for nil:NilClass
       render 'static_pages/home'
     end
   end
