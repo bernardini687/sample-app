@@ -80,6 +80,11 @@ class User < ApplicationRecord
     reset_sent_at < 2.hours.ago
   end
 
+  # Defines a proto-feed.
+  def feed
+    Micropost.where('user_id = ?', id)
+  end
+
   private
 
   # Format name and email
