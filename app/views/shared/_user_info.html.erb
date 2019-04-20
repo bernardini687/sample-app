@@ -1,0 +1,13 @@
+<h1>
+  <% if current_page?(user) %>
+  <%= gravatar_for(user, size: 60) %>
+    <%= user.name %>
+</h1>
+  <% else %>
+    <%= link_to gravatar_for(user, size: 60), user %>
+    <%= user.name %>
+</h1>
+    <span><%= link_to 'My profile', user %></span>
+    <span><%= pluralize(user.microposts.count, 'micropost') %></span>
+  <% end %>
+
