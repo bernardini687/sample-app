@@ -90,6 +90,18 @@ class User < ApplicationRecord
     Micropost.where('user_id = ?', id)
   end
 
+  def follow(user)
+    following << user
+  end
+
+  def unfollow(user)
+    following.delete(user)
+  end
+
+  def following?(user)
+    following.include?(user)
+  end
+
   private
 
   # Format name and email
